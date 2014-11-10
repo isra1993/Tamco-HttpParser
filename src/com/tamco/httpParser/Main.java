@@ -1,4 +1,4 @@
-package com.tamco.HttpParser;
+package com.tamco.httpParser;
 
 import java.io.IOException;
 import java.util.ArrayList;

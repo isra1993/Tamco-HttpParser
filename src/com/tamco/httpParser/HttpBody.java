@@ -1,4 +1,4 @@
-package com.tamco.HttpParser;
+package com.tamco.httpParser;
 
 /**
  * @author isra
