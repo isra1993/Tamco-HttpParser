@@ -1,9 +1,10 @@
-package com.tamco.httpParser;
+package com.tamco.http.parser;
+
+import com.tamco.http.constants.ContentTypes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.Arrays;
 import java.util.Hashtable;
 
 /**

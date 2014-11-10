@@ -1,4 +1,7 @@
-package com.tamco.httpParser;
+package com.tamco.http.parser;
+
+import com.tamco.http.constants.ContentTypes;
+import com.tamco.http.messages.Request;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,18 +21,18 @@ public class Main {
             "Name=Jonathan+Doe&Age=23&Formula=a+%2B+b+%3D%3D+13%25%21\n";
     private static HttpParser parser;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         List<HttpBodyParser> parsers = new ArrayList<HttpBodyParser>();
         parsers.add(new HttpUrlEncodedBodyParser());
         HttpBodyParserFactory factory = new HttpBodyParserFactory(parsers);
-        parser = new HttpParser(request, factory);
-        parser.parseRequest();
-        System.out.println("Method -> " + parser.getMethod());
-        System.out.println("URL -> " + parser.getUrl());
-        System.out.println("Version -> " + parser.getVersion());
-        System.out.println("Header host -> " + parser.getHeader("Host"));
-        System.out.println("Header accept ->" + parser.getHeader("Accept"));
-        HttpUrlEncodedBody body = (HttpUrlEncodedBody) parser.getBody();
+        parser = new HttpParser(factory);
+        Request r = parser.parseRequest(request.getBytes());
+        System.out.println("Method -> " + r.getHttpMethod());
+        System.out.println("URL -> " + r.getUrl());
+        System.out.println("Version -> " + r.getVersion());
+        System.out.println("Header host -> " + r.getHeader("Host"));
+        System.out.println("Header accept ->" + r.getHeader("Accept"));
+        HttpUrlEncodedBody body = (HttpUrlEncodedBody) r.getBody();
         System.out.println("Name -> " + body.getParam("Name"));
         System.out.println("Age -> " + body.getParam("Age"));
         System.out.println("Formula -> " + body.getParam("Formula"));

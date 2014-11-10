@@ -1,4 +1,4 @@
-package com.tamco.httpParser;
+package com.tamco.http.parser;
 
 import java.util.List;
 

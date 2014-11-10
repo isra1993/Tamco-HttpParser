@@ -1,4 +1,6 @@
-package com.tamco.httpParser;
+package com.tamco.http.parser;
+
+import com.tamco.http.constants.ContentTypes;
 
 import java.util.Hashtable;
 
@@ -11,6 +13,11 @@ public class HttpUrlEncodedBody implements HttpBody {
 
     public HttpUrlEncodedBody(Hashtable<String, String> params) {
         this.params = params;
+    }
+
+    @Override
+    public String getContentType() {
+        return ContentTypes.URL_FORM_ENCODED;
     }
 
     public String getParam(String key) {

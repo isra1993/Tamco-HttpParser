@@ -1,4 +1,4 @@
-package com.tamco.httpParser;
+package com.tamco.http.constants;
 
 /**
  * @author isra
