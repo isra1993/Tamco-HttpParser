@@ -186,11 +186,12 @@ public class SimpleHttpParser implements AbstractHttpParser {
 
     private Hashtable<String, String> parseHeaders(BufferedReader reader) throws HttpParsingException {
         try {
+            Hashtable<String, String> headers = new Hashtable<String, String>();
             String line;
             int i;
             line = reader.readLine();
-            Hashtable<String, String> headers = new Hashtable<String, String>();
-            while (!line.equals("")) {
+
+            while (line != null && !line.equals("")) {
                 i = line.indexOf(":");
                 if (i < 0) {
                     headers = null;
@@ -201,6 +202,7 @@ public class SimpleHttpParser implements AbstractHttpParser {
                 }
                 line = reader.readLine();
             }
+
             return headers;
         } catch (IOException ex) {
             throw new HttpParsingException(HttpStatus.SC_INTERNAL_SERVER_ERROR, "An error occur while processing the request\n");

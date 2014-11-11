@@ -3,6 +3,7 @@ package com.tamco.http.parser;
 import com.tamco.http.constants.ContentTypes;
 import com.tamco.http.messages.Reply;
 import com.tamco.http.messages.Request;
+import com.tamco.http.messages.WriteableException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,30 +24,32 @@ public class Main {
 
     private static SimpleHttpParser parser;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception, WriteableException {
         List<HttpBodyParser> parsers = new ArrayList<HttpBodyParser>();
         parsers.add(new HttpUrlEncodedBodyParser());
         HttpBodyParserFactory factory = new HttpBodyParserFactory();
         parser = new SimpleHttpParser();
         factory.setBodyParsers(parsers);
-        parser.setHttpBodyParserFactory(factory);
-        Request r = parser.parseRequest(request);
-        System.out.println("Method -> " + r.getHttpMethod());
-        System.out.println("URL -> " + r.getUrl());
-        System.out.println("Version -> " + r.getVersion());
-        System.out.println("Header host -> " + r.getHeader("Host"));
-        System.out.println("Header accept ->" + r.getHeader("Accept"));
-        HttpUrlEncodedBody body = (HttpUrlEncodedBody) r.getBody();
-        System.out.println("Name -> " + body.getParam("Name"));
-        System.out.println("Age -> " + body.getParam("Age"));
-        System.out.println("Formula -> " + body.getParam("Formula"));
+//        parser.setHttpBodyParserFactory(factory);
+//        Request r = parser.parseRequest(request);
+//        System.out.println("Method -> " + r.getHttpMethod());
+//        System.out.println("URL -> " + r.getUrl());
+//        System.out.println("Version -> " + r.getVersion());
+//        System.out.println("Header host -> " + r.getHeader("Host"));
+//        System.out.println("Header accept ->" + r.getHeader("Accept"));
+//        HttpUrlEncodedBody body = (HttpUrlEncodedBody) r.getBody();
+//        System.out.println("Name -> " + body.getParam("Name"));
+//        System.out.println("Age -> " + body.getParam("Age"));
+//        System.out.println("Formula -> " + body.getParam("Formula"));
+//        System.out.println();
 
         Reply reply = new Reply(200, new int[]{1, 1});
-        reply.addHeader("Host", "api.bonfire-project.eu:444");
-        reply.addHeader("Accept", "application/vnd.bonfire+xml");
-        reply.addHeader("Content-Type", ContentTypes.URL_FORM_ENCODED);
-        reply.addHeader("Accept-Encoding", "gzip, deflate");
-        reply.setBody(body);
-        System.out.println(parser.parseReply(reply));
+//        reply.addHeader("Host", "api.bonfire-project.eu:444");
+//        reply.addHeader("Accept", "application/vnd.bonfire+xml");
+//        reply.addHeader("Content-Type", ContentTypes.URL_FORM_ENCODED);
+//        reply.addHeader("Accept-Encoding", "gzip, deflate");
+//        reply.setBody(body);
+        reply.setParser(parser);
+        System.out.println(reply.getMessage());
     }
 }
