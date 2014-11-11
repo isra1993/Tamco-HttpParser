@@ -29,10 +29,9 @@ public class SimpleHttpParser implements AbstractHttpParser {
 
     public Request parseRequest(byte[] request) throws HttpParsingException {
         StringBuilder err = new StringBuilder();
-        int statusErrorCode = 0;
+        int statusErrorCode = -1;
 
-        String parsed = new String(request);
-        BufferedReader reader = new BufferedReader(new StringReader(parsed));
+
         String params[], temp[];
         Hashtable<String, String> headers = null;
         HttpMethod method = null;
@@ -40,52 +39,63 @@ public class SimpleHttpParser implements AbstractHttpParser {
         HttpBody httpBody = null;
         int[] version = new int[2];
         try {
-            String initialString = reader.readLine();
-
-
-            //If string is empty return 0
-            if (initialString == null || initialString.length() == 0) {
-                err.append("The request is empty");
-                statusErrorCode = 0;
+            if (request.length > 0) {
+                statusErrorCode = HttpStatus.SC_BAD_REQUEST;
+                err.append("The request is empty\n");
             } else {
-                //If first character is a white space return error
-                if (Character.isWhitespace(initialString.charAt(0))) {
-                    err.append("The first character is a space\n");
-                    statusErrorCode = 400;
+                String parsed = new String(request);
+                if (!parsed.contains("\n")) {
+                    statusErrorCode = HttpStatus.SC_BAD_REQUEST;
+                    err.append("The request is bad-formed\n");
                 } else {
+                    BufferedReader reader = new BufferedReader(new StringReader(parsed));
+                    String initialString = reader.readLine();
+                    //If string is empty return 0
+                    if (initialString == null || initialString.length() == 0) {
 
-                    params = initialString.split("\\s");
-                    if (params.length != 3) {
-                        err.append("The first line is bad formed : " + initialString);
-                        statusErrorCode = 400;
+                        err.append("The request is empty");
+                        statusErrorCode = 0;
                     } else {
-
-                        if (!(params[2].indexOf("HTTP/") == 0 && params[2].indexOf(".") > 5)) {
+                        //If first character is a white space return error
+                        if (Character.isWhitespace(initialString.charAt(0))) {
+                            err.append("The first character is a space\n");
                             statusErrorCode = 400;
-                            err.append("The http version is bad formed\n");
                         } else {
-                            temp = params[2].substring(5).split("\\.");
-                            version[0] = Integer.parseInt(temp[0]);
-                            version[1] = Integer.parseInt(temp[1]);
-                            method = this.getMethod(params[0]);
-                            url = params[1];
-                            headers = this.parseHeaders(reader);
-                            if (headers == null) {
-                                statusErrorCode = 400;
-                                err.append("The headers are bad formed\n");
-                            } else {
-                                String body = reader.readLine();
-                                if (body != null) {
-                                    if (headers.get(HttpHeaders.CONTENT_TYPE) != null) {
-                                        String contentType = headers.get(HttpHeaders.CONTENT_TYPE);
-                                        HttpBodyParser bodyParser = httpBodyParserFactory.getParserFor(contentType);
-                                        httpBody = bodyParser.parserBody(new BufferedReader(new StringReader(body)));
-                                    }
-                                }
 
-                                if (version[0] == 1 && version[1] >= 1 && headers.get(HttpHeaders.HOST) == null) {
-                                    err.append("Host header isn't present\n");
+                            params = initialString.split("\\s");
+                            if (params.length != 3) {
+                                err.append("The first line is bad formed : " + initialString);
+                                statusErrorCode = 400;
+                            } else {
+
+                                if (!(params[2].indexOf("HTTP/") == 0 && params[2].indexOf(".") > 5)) {
                                     statusErrorCode = 400;
+                                    err.append("The http version is bad formed\n");
+                                } else {
+                                    temp = params[2].substring(5).split("\\.");
+                                    version[0] = Integer.parseInt(temp[0]);
+                                    version[1] = Integer.parseInt(temp[1]);
+                                    method = this.getMethod(params[0]);
+                                    url = params[1];
+                                    headers = this.parseHeaders(reader);
+                                    if (headers == null) {
+                                        statusErrorCode = 400;
+                                        err.append("The headers are bad formed\n");
+                                    } else {
+                                        String body = reader.readLine();
+                                        if (body != null) {
+                                            if (headers.get(HttpHeaders.CONTENT_TYPE) != null) {
+                                                String contentType = headers.get(HttpHeaders.CONTENT_TYPE);
+                                                HttpBodyParser bodyParser = httpBodyParserFactory.getParserFor(contentType);
+                                                httpBody = bodyParser.parserBody(new BufferedReader(new StringReader(body)));
+                                            }
+                                        }
+
+                                        if (version[0] == 1 && version[1] >= 1 && headers.get(HttpHeaders.HOST) == null) {
+                                            err.append("Host header isn't present\n");
+                                            statusErrorCode = 400;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -97,9 +107,7 @@ public class SimpleHttpParser implements AbstractHttpParser {
             err.append("Server error while processing the request\n");
             statusErrorCode = HttpStatus.SC_INTERNAL_SERVER_ERROR;
         }
-        if (statusErrorCode != 0) {
-            System.out.println("ERROR CODE " + statusErrorCode);
-        }
+
         if (err.length() > 0) {
             throw new HttpParsingException(statusErrorCode, err.toString());
         }
