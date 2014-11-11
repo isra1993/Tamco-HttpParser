@@ -1,7 +1,6 @@
 package com.tamco.http.messages;
 
 
-
 /**
  * Created by runix on 10/25/14.
  * <p/>
@@ -22,10 +21,12 @@ public class Reply implements Writable {
 
     private int requestId;
 
+    private String msg;
+
     public Reply(int status) {
         this.status = status;
+        this.msg = "Empty message";
     }
-
     public int getStatus() {
         return this.status;
     }
@@ -37,7 +38,8 @@ public class Reply implements Writable {
     public void setRequestId(int requestId) {
         this.requestId = requestId;
     }
+
     public byte[] getMessage() {
-        return new byte[0];
+        return ("STATUS : "+status +"\n"+ msg +"\n").getBytes();
     }
 }

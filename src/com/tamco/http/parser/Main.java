@@ -3,7 +3,6 @@ package com.tamco.http.parser;
 import com.tamco.http.constants.ContentTypes;
 import com.tamco.http.messages.Request;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +18,14 @@ public class Main {
             "Content-Type: " + ContentTypes.URL_FORM_ENCODED + "\n" +
             "Accept-Encoding: gzip, deflate\n\n" +
             "Name=Jonathan+Doe&Age=23&Formula=a+%2B+b+%3D%3D+13%25%21\n";
-    private static HttpParser parser;
+    private static SimpleHttpParser parser;
 
     public static void main(String[] args) throws Exception {
         List<HttpBodyParser> parsers = new ArrayList<HttpBodyParser>();
         parsers.add(new HttpUrlEncodedBodyParser());
-        HttpBodyParserFactory factory = new HttpBodyParserFactory(parsers);
-        parser = new HttpParser(factory);
+        HttpBodyParserFactory factory = new HttpBodyParserFactory();
+        parser = new SimpleHttpParser();
+        parser.setHttpBodyParserFactory(factory);
         Request r = parser.parseRequest(request.getBytes());
         System.out.println("Method -> " + r.getHttpMethod());
         System.out.println("URL -> " + r.getUrl());

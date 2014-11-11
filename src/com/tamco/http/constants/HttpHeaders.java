@@ -6,4 +6,5 @@ package com.tamco.http.constants;
 public interface HttpHeaders {
     String CONTENT_TYPE = "Content-Type";
     String HOST = "Host";
+    String AUTHORIZATION = "Authorization";
 }

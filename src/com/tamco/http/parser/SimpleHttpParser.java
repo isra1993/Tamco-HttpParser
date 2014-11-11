@@ -15,15 +15,15 @@ import java.util.Hashtable;
 /**
  * @author isra
  */
-public class HttpParser implements AbstractHttpParser{
+public class SimpleHttpParser implements AbstractHttpParser {
 
     private HttpBodyParserFactory httpBodyParserFactory;
 
 
     @Configure
     public void configure() throws InvalidConfigException {
-        if(httpBodyParserFactory == null) {
-            throw  new InvalidConfigException("Error, the httpBodyParserFactory can't be null \n");
+        if (httpBodyParserFactory == null) {
+            throw new InvalidConfigException("Error, the httpBodyParserFactory can't be null \n");
         }
     }
 
@@ -56,7 +56,7 @@ public class HttpParser implements AbstractHttpParser{
 
                     params = initialString.split("\\s");
                     if (params.length != 3) {
-                        err.append("The first line is bad formed : "+initialString);
+                        err.append("The first line is bad formed : " + initialString);
                         statusErrorCode = 400;
                     } else {
 
@@ -97,8 +97,8 @@ public class HttpParser implements AbstractHttpParser{
             err.append("Server error while processing the request\n");
             statusErrorCode = HttpStatus.SC_INTERNAL_SERVER_ERROR;
         }
-        if(statusErrorCode != 0) {
-            System.out.println("ERROR CODE "+statusErrorCode);
+        if (statusErrorCode != 0) {
+            System.out.println("ERROR CODE " + statusErrorCode);
         }
         if (err.length() > 0) {
             throw new HttpParsingException(statusErrorCode, err.toString());

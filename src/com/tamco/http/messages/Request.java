@@ -21,18 +21,14 @@ public class Request {
 
     private HttpMethod httpMethod;
 
-    private Hashtable<String,String> headers;
+    private Hashtable<String, String> headers;
 
-    public Request(Hashtable<String,String> headers, HttpMethod httpMethod, HttpBody httpBody, String url, int[] version) {
+    public Request(Hashtable<String, String> headers, HttpMethod httpMethod, HttpBody httpBody, String url, int[] version) {
         this.headers = headers;
         this.httpMethod = httpMethod;
         this.httpBody = httpBody;
         this.url = url;
         this.version = version;
-    }
-
-    public void setRequestId(int requestId) {
-        this.requestId = requestId;
     }
 
     public String getHeader(String name) {
@@ -61,6 +57,10 @@ public class Request {
 
     public int getRequestId() {
         return requestId;
+    }
+
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
     }
 
     public HttpMethod getHttpMethod() {

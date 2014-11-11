@@ -8,5 +8,6 @@ import java.io.IOException;
  */
 public interface HttpBodyParser {
     public boolean canParseBody(String contentType);
+
     public HttpBody parserBody(BufferedReader body) throws IOException;
 }

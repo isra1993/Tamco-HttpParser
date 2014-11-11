@@ -8,13 +8,13 @@ import java.util.List;
 public class HttpBodyParserFactory {
     private List<HttpBodyParser> bodyParsers;
 
-    public HttpBodyParserFactory(List<HttpBodyParser> bodyParsers) {
-        this.bodyParsers = bodyParsers;
+    public HttpBodyParserFactory() {
+
     }
 
     public HttpBodyParser getParserFor(String contentType) {
         for (HttpBodyParser bodyParser : bodyParsers) {
-            if(bodyParser.canParseBody(contentType)) {
+            if (bodyParser.canParseBody(contentType)) {
                 return bodyParser;
             }
         }
