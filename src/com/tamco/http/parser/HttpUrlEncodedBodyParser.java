@@ -4,7 +4,9 @@ import com.tamco.http.constants.ContentTypes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Hashtable;
 
 /**
@@ -38,5 +40,10 @@ public class HttpUrlEncodedBodyParser implements HttpBodyParser {
         }
 
         return new HttpUrlEncodedBody(table);
+    }
+
+    @Override
+    public String unparseBody(HttpBody body) throws UnsupportedEncodingException {
+        return URLEncoder.encode(body.getContent(), "ISO-8859-1");
     }
 }

@@ -10,19 +10,39 @@ import java.util.Hashtable;
  * Created by runix on 10/25/14.
  */
 public class Request {
-
+    /**
+     * URL resource for HTTP request
+     */
     private String url;
-
+    /**
+     * HTTP version
+     */
     private int[] version;
-
+    /**
+     * Message body whose type is specified by HTTP headers
+     */
     private HttpBody httpBody;
-
+    /**
+     * Request identifier
+     */
     private int requestId;
-
+    /**
+     * Type of HTTP method
+     */
     private HttpMethod httpMethod;
-
+    /**
+     * Table of HTTP headers present in request
+     */
     private Hashtable<String, String> headers;
 
+    /**
+     * Request builder that receives
+     * @param headers Table of HTTP headers
+     * @param httpMethod HTTP method
+     * @param httpBody Content message
+     * @param url Resource URL
+     * @param version HTTP version
+     */
     public Request(Hashtable<String, String> headers, HttpMethod httpMethod, HttpBody httpBody, String url, int[] version) {
         this.headers = headers;
         this.httpMethod = httpMethod;
@@ -31,38 +51,67 @@ public class Request {
         this.version = version;
     }
 
+    /**
+     * Returns HTTP header that correspond with received name
+     * @param name Header name
+     * @return Resource with correspondent name if exists
+     */
     public String getHeader(String name) {
         return headers.get(name);
     }
 
+    /**
+     * Return all available headers for that request
+     * @return Available headers
+     */
     public Enumeration<String> getAvailableHeaders() {
         return headers.keys();
     }
 
-    public int[] getVersion() {
-        return this.version;
+    /**
+     * Return HTTP version from that request
+     * @return HTTP version
+     */
+    public String getVersion() {
+        return "HTTP/" + version[0] + "." + version[1];
     }
 
+    /**
+     * Return HTTPBody class
+     * @return Body class
+     */
     public HttpBody getBody() {
         return this.httpBody;
     }
 
+    /**
+     * Return the URL from current request resource
+     * @return Resource URL
+     */
     public String getUrl() {
         return url;
     }
 
-    public HttpBody getHttpBody() {
-        return httpBody;
-    }
-
+    /**
+     * Return request identifier
+     * @return Request id
+     */
     public int getRequestId() {
         return requestId;
     }
 
+    /**
+     * Changes request identifier by the received one
+     * @param requestId New request id to be modified
+     */
     public void setRequestId(int requestId) {
         this.requestId = requestId;
     }
 
+    /**
+     * Return HTTP method from Enum list
+     * @return HTTP method
+     */
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }

@@ -5,5 +5,5 @@ package com.tamco.http.messages;
  */
 public interface Writable {
 
-    public byte[] getMessage();
+    public String getMessage() throws WriteableException;
 }

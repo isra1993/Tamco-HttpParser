@@ -3,6 +3,7 @@ package com.tamco.http.parser;
 import com.tamco.http.constants.HttpHeaders;
 import com.tamco.http.constants.HttpMethod;
 import com.tamco.http.constants.HttpStatus;
+import com.tamco.http.messages.Reply;
 import com.tamco.http.messages.Request;
 import com.tamco.ioc.annotation.Configure;
 import com.tamco.ioc.exception.InvalidConfigException;
@@ -10,7 +11,10 @@ import com.tamco.ioc.exception.InvalidConfigException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Set;
 
 /**
  * @author isra
@@ -27,7 +31,7 @@ public class SimpleHttpParser implements AbstractHttpParser {
         }
     }
 
-    public Request parseRequest(byte[] request) throws HttpParsingException {
+    public Request parseRequest(String request) throws HttpParsingException {
         StringBuilder err = new StringBuilder();
         int statusErrorCode = -1;
 
@@ -38,12 +42,13 @@ public class SimpleHttpParser implements AbstractHttpParser {
         String url = "";
         HttpBody httpBody = null;
         int[] version = new int[2];
+
         try {
-            if (request.length > 0) {
+            if (request.length() < 0) {
                 statusErrorCode = HttpStatus.SC_BAD_REQUEST;
                 err.append("The request is empty\n");
             } else {
-                String parsed = new String(request);
+                String parsed = request;
                 if (!parsed.contains("\n")) {
                     statusErrorCode = HttpStatus.SC_BAD_REQUEST;
                     err.append("The request is bad-formed\n");
@@ -59,17 +64,17 @@ public class SimpleHttpParser implements AbstractHttpParser {
                         //If first character is a white space return error
                         if (Character.isWhitespace(initialString.charAt(0))) {
                             err.append("The first character is a space\n");
-                            statusErrorCode = 400;
+                            statusErrorCode = HttpStatus.SC_BAD_REQUEST;
                         } else {
 
                             params = initialString.split("\\s");
                             if (params.length != 3) {
                                 err.append("The first line is bad formed : " + initialString);
-                                statusErrorCode = 400;
+                                statusErrorCode = HttpStatus.SC_BAD_REQUEST;
                             } else {
 
                                 if (!(params[2].indexOf("HTTP/") == 0 && params[2].indexOf(".") > 5)) {
-                                    statusErrorCode = 400;
+                                    statusErrorCode = HttpStatus.SC_BAD_REQUEST;
                                     err.append("The http version is bad formed\n");
                                 } else {
                                     temp = params[2].substring(5).split("\\.");
@@ -79,7 +84,7 @@ public class SimpleHttpParser implements AbstractHttpParser {
                                     url = params[1];
                                     headers = this.parseHeaders(reader);
                                     if (headers == null) {
-                                        statusErrorCode = 400;
+                                        statusErrorCode = HttpStatus.SC_BAD_REQUEST;
                                         err.append("The headers are bad formed\n");
                                     } else {
                                         String body = reader.readLine();
@@ -89,11 +94,6 @@ public class SimpleHttpParser implements AbstractHttpParser {
                                                 HttpBodyParser bodyParser = httpBodyParserFactory.getParserFor(contentType);
                                                 httpBody = bodyParser.parserBody(new BufferedReader(new StringReader(body)));
                                             }
-                                        }
-
-                                        if (version[0] == 1 && version[1] >= 1 && headers.get(HttpHeaders.HOST) == null) {
-                                            err.append("Host header isn't present\n");
-                                            statusErrorCode = 400;
                                         }
                                     }
                                 }
@@ -112,6 +112,55 @@ public class SimpleHttpParser implements AbstractHttpParser {
             throw new HttpParsingException(statusErrorCode, err.toString());
         }
         return new Request(headers, method, httpBody, url, version);
+    }
+
+    public String parseReply(Reply reply) throws HttpParsingException {
+        StringBuilder result = new StringBuilder();
+        StringBuilder err = new StringBuilder();
+        int statusErrorCode = -1;
+        HashMap<String, String> headers = reply.getHeaders();
+        HttpBody body = reply.getBody();
+        String version;
+        int temp[] = reply.getVersion();
+
+        if (temp[0] >= 0 && temp[1] >= 0) {
+            version = "HTTP/" + temp[0] + "." + temp[1];
+
+            if (reply.getStatus() >= 0) {
+                result.append(version + " " + reply.getStatus() + " " + HttpStatus.getStatusText(reply.getStatus()) + "\n");
+
+                if (headers != null) {
+                    result.append(unParseHeaders(headers));
+
+                    if (body != null) {
+                        if (headers.get(HttpHeaders.CONTENT_TYPE) != null) {
+                            String contentType = headers.get(HttpHeaders.CONTENT_TYPE);
+                            HttpBodyParser bodyParser = httpBodyParserFactory.getParserFor(contentType);
+                            try {
+                                result.append(bodyParser.unparseBody(body) + "\n");
+                            } catch (UnsupportedEncodingException e) {
+                                err.append("Error with body encoding.\n");
+                            }
+                        }
+                    }
+                } else {
+                    err.append("Headers are malformed.\n");
+                    statusErrorCode = HttpStatus.SC_BAD_REQUEST;
+                }
+            } else {
+                err.append("Incorrect status.\n");
+                statusErrorCode = HttpStatus.SC_BAD_REQUEST;
+            }
+        } else {
+            err.append("Malformed version.\n");
+            statusErrorCode = HttpStatus.SC_BAD_REQUEST;
+        }
+
+        if (err.length() != 0) {
+            throw new HttpParsingException(statusErrorCode, err.toString());
+        }
+
+        return result.toString();
     }
 
 
@@ -156,6 +205,18 @@ public class SimpleHttpParser implements AbstractHttpParser {
         } catch (IOException ex) {
             throw new HttpParsingException(HttpStatus.SC_INTERNAL_SERVER_ERROR, "An error occur while processing the request\n");
         }
+    }
+
+    private String unParseHeaders(HashMap<String, String> map) {
+        Set<String> keys = map.keySet();
+        StringBuilder builder = new StringBuilder();
+
+        for (String key : keys) {
+            builder.append(key + ": " + map.get(key) + "\n");
+        }
+
+        builder.append("\n");
+        return builder.toString();
     }
 
     public void setHttpBodyParserFactory(HttpBodyParserFactory httpBodyParserFactory) {

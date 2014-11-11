@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TamcoHttpParser.iml" filepath="$PROJECT_DIR$/TamcoHttpParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tamco-ioc/tamco.ioc.iml" filepath="$PROJECT_DIR$/../tamco-ioc/tamco.ioc.iml" />
     </modules>
   </component>
 </project>

@@ -1,5 +1,6 @@
 package com.tamco.http.parser;
 
+import com.tamco.http.messages.Reply;
 import com.tamco.http.messages.Request;
 
 /**
@@ -8,5 +9,6 @@ import com.tamco.http.messages.Request;
 public interface AbstractHttpParser {
 
 
-    public Request parseRequest(byte[] request) throws HttpParsingException;
+    public Request parseRequest(String request) throws HttpParsingException;
+    public String parseReply(Reply reply) throws HttpParsingException;
 }

@@ -1,9 +1,10 @@
 package com.tamco.http.parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by isra on 10/11/14.
+ * @author isra
  */
 public class HttpBodyParserFactory {
     private List<HttpBodyParser> bodyParsers;
@@ -22,6 +23,9 @@ public class HttpBodyParserFactory {
     }
 
     public void addBodyParser(HttpBodyParser bodyParser) {
+        if (bodyParsers == null) {
+            this.bodyParsers = new ArrayList<HttpBodyParser>();
+        }
         this.bodyParsers.add(bodyParser);
     }
 

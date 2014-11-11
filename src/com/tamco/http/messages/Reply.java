@@ -1,6 +1,13 @@
 package com.tamco.http.messages;
 
 
+import com.tamco.http.constants.HttpHeaders;
+import com.tamco.http.parser.HttpBody;
+import com.tamco.http.parser.HttpParsingException;
+import com.tamco.http.parser.SimpleHttpParser;
+
+import java.util.HashMap;
+
 /**
  * Created by runix on 10/25/14.
  * <p/>
@@ -11,22 +18,24 @@ package com.tamco.http.messages;
  */
 public class Reply implements Writable {
 
-    /**
-     * Status code ( See {@link com.tamco.twrest.httpMessage.HttpStatus} for see
-     * the status codes )
-     * <p/>
-     * This status code are the same as HTTP 1.1 standard
-     */
     private final int status;
+
+    private SimpleHttpParser parser;
 
     private int requestId;
 
-    private String msg;
+    private HashMap<String, String> headers;
 
-    public Reply(int status) {
+    private HttpBody body;
+
+    private int[] version;
+
+    public Reply(int status, int[] version) {
         this.status = status;
-        this.msg = "Empty message";
+        this.version = version;
+        this.headers = new HashMap<String, String>();
     }
+
     public int getStatus() {
         return this.status;
     }
@@ -39,7 +48,40 @@ public class Reply implements Writable {
         this.requestId = requestId;
     }
 
-    public byte[] getMessage() {
-        return ("STATUS : "+status +"\n"+ msg +"\n").getBytes();
+    public HashMap<String, String> getHeaders() {
+        return headers;
+    }
+
+    public String getHeader(String key) {
+        return headers.get(key);
+    }
+
+    public void addHeader(String key, String value) {
+        this.headers.put(key, value);
+    }
+
+    public HttpBody getBody() {
+        return body;
+    }
+
+    public void setBody(HttpBody body) {
+        this.body = body;
+        this.addHeader(HttpHeaders.CONTENT_TYPE, this.body.getContentType());
+    }
+
+    public int[] getVersion() {
+        return version;
+    }
+
+    public void setParser(SimpleHttpParser parser) {
+        this.parser = parser;
+    }
+
+    public String getMessage() throws WriteableException {
+        try {
+            return parser.parseReply(this);
+        } catch (HttpParsingException e) {
+            throw new WriteableException(e.getMessage());
+        }
     }
 }
