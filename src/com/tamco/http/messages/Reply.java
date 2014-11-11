@@ -2,6 +2,7 @@ package com.tamco.http.messages;
 
 
 import com.tamco.http.constants.HttpHeaders;
+import com.tamco.http.parser.AbstractHttpParser;
 import com.tamco.http.parser.HttpBody;
 import com.tamco.http.parser.HttpParsingException;
 import com.tamco.http.parser.SimpleHttpParser;
@@ -20,7 +21,7 @@ public class Reply implements Writable {
 
     private final int status;
 
-    private SimpleHttpParser parser;
+    private static AbstractHttpParser parser;
 
     private int requestId;
 
@@ -73,8 +74,9 @@ public class Reply implements Writable {
         return version;
     }
 
-    public void setParser(SimpleHttpParser parser) {
-        this.parser = parser;
+    public static void setParser(AbstractHttpParser parser) {
+        //TODO temporary
+        Reply.parser = parser;
     }
 
     public String getMessage() throws WriteableException {

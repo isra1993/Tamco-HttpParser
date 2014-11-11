@@ -3,9 +3,9 @@ package com.tamco.http.messages;
 import com.tamco.http.parser.HttpParsingException;
 
 /**
- * Created by isra on 11/11/14.
+ * @author isra
  */
-public class WriteableException extends Throwable {
+public class WriteableException extends Exception {
     public WriteableException(String message) {
         super(message);
     }
