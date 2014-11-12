@@ -12,13 +12,33 @@ import java.util.Hashtable;
 
 /**
  * @author isra
+ * @version 1.0
+ *
+ * Class to parse body with urlencoded Content Type. Uses ISO-8859-1 to decode body with
+ * ContentType=application/x-www-form-urlencoded that has this format: MyParam1=Value1&MyParam2=Value2
+ * and replaces non characters with '%' symbol plus an ASCII representation of specific symbol like white
+ * space(' ') for example.
  */
 public class HttpUrlEncodedBodyParser implements HttpBodyParser {
+    /**
+     * Verify if body can be parsed with this parser.
+     * @param contentType Type of body to parse
+     * @return
+     *          true if body can be parsed
+     *          false if it can not
+     *
+     */
     @Override
     public boolean canParseBody(String contentType) {
         return ContentTypes.URL_FORM_ENCODED.equals(contentType);
     }
 
+    /**
+     * Parses received body with urlencoded ContentType that uses ISO-8859-1 to encode it.
+     * @param bodyString Body to be parsed
+     * @return A class HttpBody that represents parsed body
+     * @throws IOException If any error occurs while string is read throws this exception
+     */
     @Override
     public HttpBody parserBody(String bodyString) throws IOException {
         String line;

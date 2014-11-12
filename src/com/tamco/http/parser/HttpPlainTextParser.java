@@ -5,7 +5,8 @@ import com.tamco.http.constants.ContentTypes;
 import java.io.IOException;
 
 /**
- * Created by runix on 11/12/14.
+ * @author isra
+ * @version 1.0
  */
 public class HttpPlainTextParser implements HttpBodyParser {
 

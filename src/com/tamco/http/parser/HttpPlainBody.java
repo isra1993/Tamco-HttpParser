@@ -3,7 +3,8 @@ package com.tamco.http.parser;
 import com.tamco.http.constants.ContentTypes;
 
 /**
- * Created by runix on 11/12/14.
+ * @author isra
+ * @version 1.0
  */
 public class HttpPlainBody implements HttpBody {
 

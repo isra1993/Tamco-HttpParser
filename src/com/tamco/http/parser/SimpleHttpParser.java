@@ -18,12 +18,33 @@ import java.util.Set;
 
 /**
  * @author isra
+ * @version 1.0
+ *
+ * Simple HTTP parser that implements AbstractHttpParser interface.
+ * This class realises the parse of specific HTTP requests or responses
+ * using a factory method to choose body encoding type automatically.
+ *
+ * In case of request this class verifies that is well formed and proceeds
+ * to parse it creating a Request class with correct attributes.
+ *
+ * In the other case, the response, a Reply class is verified and
+ * converted to a string message to be sent to client.
+ *
  */
 public class SimpleHttpParser implements AbstractHttpParser {
 
+    /**
+     * Factory class that allow to choose body parser type
+     * automatically analyzing ContentType present in
+     * HTTP headers
+     */
     private HttpBodyParserFactory httpBodyParserFactory;
 
-
+    /**
+     * Configure class with JSON configuration file to inject the factory parser
+     * @throws InvalidConfigException If a configuration error is produced
+     *          this exception is thrown
+     */
     @Configure
     public void configure() throws InvalidConfigException {
         if (httpBodyParserFactory == null) {
@@ -31,6 +52,15 @@ public class SimpleHttpParser implements AbstractHttpParser {
         }
     }
 
+    /**
+     * Parses the received string HTTP request and verify if it is well formed.
+     * If all is ok returns a Request java class that contains all HTTP request
+     * received data
+     * @param request HTTP request in String form
+     * @return a Request class with all HTTP request attributes verified
+     * @throws HttpParsingException If any error occurs while parsing this
+     *          exception is thrown
+     */
     public Request parseRequest(String request) throws HttpParsingException {
         StringBuilder err = new StringBuilder();
         int statusErrorCode = -1;
@@ -114,6 +144,15 @@ public class SimpleHttpParser implements AbstractHttpParser {
         return new Request(headers, method, httpBody, url, version);
     }
 
+    /**
+     * Parses a HTTP reply received in class form and converts it to string
+     * form to send it to HTTP client. Verify all reply attributes and
+     * send response if all is ok.
+     * @param reply Class that represents a reply with their attributes
+     * @return A string representation of HTTP response
+     * @throws HttpParsingException If any error occurs while parsing this
+     *          exception is thrown
+     */
     public String parseReply(Reply reply) throws HttpParsingException {
         StringBuilder result = new StringBuilder();
         StringBuilder err = new StringBuilder();
@@ -156,7 +195,13 @@ public class SimpleHttpParser implements AbstractHttpParser {
         return result.toString();
     }
 
-
+    /**
+     * Returns the HTTP method if it is correct
+     * @param method A string representation of HTTP method
+     * @return
+     *          An enum type of HTTP method if it exists
+     *          Null if it is not correct
+     */
     private HttpMethod getMethod(String method) {
         HttpMethod httpMethod = null;
         if (method.equals("GET")) {
@@ -177,6 +222,14 @@ public class SimpleHttpParser implements AbstractHttpParser {
         return httpMethod;
     }
 
+    /**
+     * Parses request headers receiving a buffer reader that points to first header
+     * if there are them or to null if there are not
+     * @param reader Buffer that points to the first header or to null if there are no headers
+     * @return A hash table with all headers present in request
+     * @throws HttpParsingException If any error occurs while parsing headers this
+     *          exception is thrown
+     */
     private Hashtable<String, String> parseHeaders(BufferedReader reader) throws HttpParsingException {
         try {
             Hashtable<String, String> headers = new Hashtable<String, String>();
@@ -202,6 +255,11 @@ public class SimpleHttpParser implements AbstractHttpParser {
         }
     }
 
+    /**
+     * Returns headers to string initial form extracting it from a received map
+     * @param map Hash map with all the reply headers
+     * @return A string representation of reply headers
+     */
     private String unParseHeaders(HashMap<String, String> map) {
         Set<String> keys = map.keySet();
         StringBuilder builder = new StringBuilder();
@@ -214,6 +272,10 @@ public class SimpleHttpParser implements AbstractHttpParser {
         return builder.toString();
     }
 
+    /**
+     * Changes factory parser by the received one
+     * @param httpBodyParserFactory New factory parser
+     */
     public void setHttpBodyParserFactory(HttpBodyParserFactory httpBodyParserFactory) {
         this.httpBodyParserFactory = httpBodyParserFactory;
     }

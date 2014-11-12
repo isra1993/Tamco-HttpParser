@@ -26,7 +26,7 @@ public class HttpStatus {
      * Get the reason phrase for a particular status code.
      *
      * This method always returns the English text as specified in the
-     * relevent RFCs and is not internationalized.
+     * relevant RFCs and is not internationalized.
      *
      * @param statusCode the numeric status code
      * @return the reason phrase associated with the given status code

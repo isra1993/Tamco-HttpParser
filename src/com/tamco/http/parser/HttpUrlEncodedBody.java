@@ -7,6 +7,7 @@ import java.util.Set;
 
 /**
  * @author isra
+ * @version 1.0
  */
 public class HttpUrlEncodedBody implements HttpBody {
 

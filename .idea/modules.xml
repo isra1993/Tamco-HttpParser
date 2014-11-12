@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TamcoHttpParser.iml" filepath="$PROJECT_DIR$/TamcoHttpParser.iml" />
       <module fileurl="file://$PROJECT_DIR$/../tamco-ioc/tamco.ioc.iml" filepath="$PROJECT_DIR$/../tamco-ioc/tamco.ioc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tamco-ioc/tamco.ioc.iml" filepath="$PROJECT_DIR$/../tamco-ioc/tamco.ioc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tamco-ioc-modules/tamco-ioc-module-jdbc-connection/tamco.ioc.module.jdbc-connection.iml" filepath="$PROJECT_DIR$/../tamco-ioc-modules/tamco-ioc-module-jdbc-connection/tamco.ioc.module.jdbc-connection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tamco-twrest/tamco.twrest.iml" filepath="$PROJECT_DIR$/../tamco-twrest/tamco.twrest.iml" />
     </modules>
   </component>
 </project>

@@ -1,7 +1,8 @@
 package com.tamco.http.parser;
 
 /**
- * Created by runix on 11/10/14.
+ * @author isra
+ * @version 1.0
  */
 public class HttpParsingException extends Exception {
 

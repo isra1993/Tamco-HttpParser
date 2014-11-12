@@ -7,7 +7,12 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * Created by runix on 10/25/14.
+ * @author isra
+ * @version 1.0
+ *
+ * Request that be sent to the server and contains all Request data after parse it.
+ * It is very similar to HTTP Request because we want to make easy the change between HTTP and this
+ * library.
  */
 public class Request {
     /**
