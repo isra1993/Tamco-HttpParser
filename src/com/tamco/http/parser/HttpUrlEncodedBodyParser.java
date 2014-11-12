@@ -4,6 +4,7 @@ import com.tamco.http.constants.ContentTypes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -19,11 +20,11 @@ public class HttpUrlEncodedBodyParser implements HttpBodyParser {
     }
 
     @Override
-    public HttpBody parserBody(BufferedReader body) throws IOException {
+    public HttpBody parserBody(String bodyString) throws IOException {
         String line;
         String params[], temp[];
         Hashtable<String, String> table = new Hashtable<String, String>();
-
+        BufferedReader body = new BufferedReader(new StringReader(bodyString));
         line = body.readLine();
         while (line != null) {
             params = line.split("&");
@@ -42,8 +43,4 @@ public class HttpUrlEncodedBodyParser implements HttpBodyParser {
         return new HttpUrlEncodedBody(table);
     }
 
-    @Override
-    public String unparseBody(HttpBody body) throws UnsupportedEncodingException {
-        return URLEncoder.encode(body.getContent(), "ISO-8859-1");
-    }
 }

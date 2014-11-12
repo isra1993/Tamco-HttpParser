@@ -92,7 +92,7 @@ public class SimpleHttpParser implements AbstractHttpParser {
                                             if (headers.get(HttpHeaders.CONTENT_TYPE) != null) {
                                                 String contentType = headers.get(HttpHeaders.CONTENT_TYPE);
                                                 HttpBodyParser bodyParser = httpBodyParserFactory.getParserFor(contentType);
-                                                httpBody = bodyParser.parserBody(new BufferedReader(new StringReader(body)));
+                                                httpBody = bodyParser.parserBody(body);
                                             }
                                         }
                                     }
@@ -131,16 +131,9 @@ public class SimpleHttpParser implements AbstractHttpParser {
 
                 if (headers != null) {
                     result.append(unParseHeaders(headers));
-
                     if (body != null) {
                         if (headers.get(HttpHeaders.CONTENT_TYPE) != null) {
-                            String contentType = headers.get(HttpHeaders.CONTENT_TYPE);
-                            HttpBodyParser bodyParser = httpBodyParserFactory.getParserFor(contentType);
-                            try {
-                                result.append(bodyParser.unparseBody(body) + "\n");
-                            } catch (UnsupportedEncodingException e) {
-                                err.append("Error with body encoding.\n");
-                            }
+                            result.append(reply.getBody().getContent());
                         }
                     }
                 } else {

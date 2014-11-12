@@ -28,8 +28,11 @@ public class HttpUrlEncodedBody implements HttpBody {
         for (String key : keys) {
             builder.append(key + "=" + params.get(key) + "&");
         }
-
-        return builder.toString();
+        String content = builder.toString();
+        if(content.length() > 1) {
+            content = content.substring(0,content.length()-1);
+        }
+        return content;
     }
 
     public String getParam(String key) {

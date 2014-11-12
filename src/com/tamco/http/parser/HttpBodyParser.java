@@ -8,9 +8,10 @@ import java.io.UnsupportedEncodingException;
  * @author isra
  */
 public interface HttpBodyParser {
+
     public boolean canParseBody(String contentType);
 
-    public HttpBody parserBody(BufferedReader body) throws IOException;
+    public HttpBody parserBody(String body) throws IOException;
 
-    public String unparseBody(HttpBody body) throws UnsupportedEncodingException;
+   // public String unparseBody(HttpBody body) throws UnsupportedEncodingException;
 }

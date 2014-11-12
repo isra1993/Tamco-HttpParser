@@ -5,4 +5,5 @@ package com.tamco.http.constants;
  */
 public interface ContentTypes {
     String URL_FORM_ENCODED = "application/x-www-form-urlencoded";
+    String PLAIN_TEXT = "text/plain";
 }
