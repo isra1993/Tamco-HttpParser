@@ -1,5 +1,7 @@
 package com.tamco.http.parser;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @author isra
  * @version 1.0
@@ -11,8 +13,10 @@ public interface HttpBody {
     /**
      * Returns message content in string form
      * @return A string with the content
+     * @throws UnsupportedEncodingException If any error is produced
+     *          while encoding this exception is thrown
      */
-    public String getContent();
+    public String getContent() throws UnsupportedEncodingException;
 
     /**
      * Returns type of body content that define
