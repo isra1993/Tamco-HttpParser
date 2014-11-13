@@ -3,6 +3,8 @@ package com.tamco.http.parser;
 import com.tamco.http.messages.Reply;
 import com.tamco.http.messages.Request;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @author isra
  * @version 1.0
@@ -29,6 +31,8 @@ public interface AbstractHttpParser {
      * @return A String representation of a HTTP response
      * @throws HttpParsingException If any error occurs while parsing message
      *          this exception is thrown
+     * @throws UnsupportedEncodingException If any error occurs while encoding message
+     *          this exception is thrown
      */
-    public String parseReply(Reply reply) throws HttpParsingException;
+    public String parseReply(Reply reply) throws HttpParsingException, UnsupportedEncodingException;
 }

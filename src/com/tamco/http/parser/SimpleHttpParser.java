@@ -41,18 +41,6 @@ public class SimpleHttpParser implements AbstractHttpParser {
     private HttpBodyParserFactory httpBodyParserFactory;
 
     /**
-     * Configure class with JSON configuration file to inject the factory parser
-     * @throws InvalidConfigException If a configuration error is produced
-     *          this exception is thrown
-     */
-    @Configure
-    public void configure() throws InvalidConfigException {
-        if (httpBodyParserFactory == null) {
-            throw new InvalidConfigException("Error, the httpBodyParserFactory can't be null \n");
-        }
-    }
-
-    /**
      * Parses the received string HTTP request and verify if it is well formed.
      * If all is ok returns a Request java class that contains all HTTP request
      * received data
@@ -152,8 +140,10 @@ public class SimpleHttpParser implements AbstractHttpParser {
      * @return A string representation of HTTP response
      * @throws HttpParsingException If any error occurs while parsing this
      *          exception is thrown
+     * @throws UnsupportedEncodingException If any error occurs while encoding
+     *          this exception is thrown.
      */
-    public String parseReply(Reply reply) throws HttpParsingException {
+    public String parseReply(Reply reply) throws HttpParsingException, UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         StringBuilder err = new StringBuilder();
         int statusErrorCode = -1;

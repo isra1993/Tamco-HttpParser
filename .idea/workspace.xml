@@ -63,14 +63,14 @@
         <option value="$PROJECT_DIR$/src/com/tamco/http/constants/ContentTypes.java" />
         <option value="$PROJECT_DIR$/src/com/tamco/http/constants/HttpHeaders.java" />
         <option value="$PROJECT_DIR$/src/com/tamco/http/messages/Writable.java" />
-        <option value="$PROJECT_DIR$/src/com/tamco/http/parser/AbstractHttpParser.java" />
-        <option value="$PROJECT_DIR$/src/com/tamco/http/parser/SimpleHttpParser.java" />
         <option value="$PROJECT_DIR$/src/com/tamco/http/parser/HttpBodyParser.java" />
         <option value="$PROJECT_DIR$/src/com/tamco/http/parser/HttpParsingException.java" />
         <option value="$PROJECT_DIR$/src/com/tamco/http/parser/HttpPlainBody.java" />
         <option value="$PROJECT_DIR$/src/com/tamco/http/parser/HttpPlainTextParser.java" />
         <option value="$PROJECT_DIR$/src/com/tamco/http/parser/HttpBody.java" />
         <option value="$PROJECT_DIR$/src/com/tamco/http/parser/HttpUrlEncodedBody.java" />
+        <option value="$PROJECT_DIR$/src/com/tamco/http/parser/SimpleHttpParser.java" />
+        <option value="$PROJECT_DIR$/src/com/tamco/http/parser/AbstractHttpParser.java" />
       </list>
     </option>
   </component>
@@ -694,14 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tamco/http/parser/AbstractHttpParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6205421" vertical-offset="0" max-vertical-offset="701">
-          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tamco/http/parser/HttpBodyParserFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="199" max-vertical-offset="900">
@@ -709,14 +701,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tamco/http/parser/SimpleHttpParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.957204" vertical-offset="3259" max-vertical-offset="4110">
-          <caret line="276" column="54" selection-start-line="276" selection-start-column="54" selection-end-line="276" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -732,14 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5563481" vertical-offset="0" max-vertical-offset="701">
           <caret line="30" column="41" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tamco/http/parser/HttpBodyParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29957205" vertical-offset="0" max-vertical-offset="701">
-          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
           <folding />
         </state>
       </provider>
@@ -768,10 +744,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tamco/http/parser/SimpleHttpParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06419401" vertical-offset="1890" max-vertical-offset="3960">
+          <caret line="143" column="41" selection-start-line="143" selection-start-column="41" selection-end-line="143" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tamco/http/parser/HttpUrlEncodedBodyParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23537803" vertical-offset="0" max-vertical-offset="930">
+        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="930">
           <caret line="19" column="26" selection-start-line="16" selection-start-column="53" selection-end-line="19" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tamco/http/parser/HttpBodyParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29957205" vertical-offset="0" max-vertical-offset="701">
+          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tamco/http/parser/AbstractHttpParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66333807" vertical-offset="0" max-vertical-offset="701">
+          <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
           <folding />
         </state>
       </provider>
