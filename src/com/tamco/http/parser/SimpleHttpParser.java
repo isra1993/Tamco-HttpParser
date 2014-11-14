@@ -269,4 +269,8 @@ public class SimpleHttpParser implements AbstractHttpParser {
     public void setHttpBodyParserFactory(HttpBodyParserFactory httpBodyParserFactory) {
         this.httpBodyParserFactory = httpBodyParserFactory;
     }
+
+    public void configure() {
+        //TODO implement
+    }
 }

@@ -4,29 +4,27 @@ package com.tamco.http.messages;
 import com.tamco.http.constants.HttpHeaders;
 import com.tamco.http.parser.AbstractHttpParser;
 import com.tamco.http.parser.HttpBody;
-import com.tamco.http.parser.HttpParsingException;
-import com.tamco.http.parser.SimpleHttpParser;
 
 import java.util.HashMap;
 
 /**
  * @author isra
  * @version 1.0
- *
- * Reply returned by the server to the client. This reply
- * has a similar architecture as the http messages because
- * we want to make easy the change between HTTP and this
- * library.
+ *          <p/>
+ *          Reply returned by the server to the client. This reply
+ *          has a similar architecture as the http messages because
+ *          we want to make easy the change between HTTP and this
+ *          library.
  */
 public class Reply implements Writable {
-    /**
-     * HTTP status code
-     */
-    private final int status;
     /**
      * Parser used to parse body reply
      */
     private static AbstractHttpParser parser;
+    /**
+     * HTTP status code
+     */
+    private final int status;
     /**
      * Reply identifier
      */
@@ -46,7 +44,8 @@ public class Reply implements Writable {
 
     /**
      * Reply builder that receives status and version
-     * @param status HTTP status code
+     *
+     * @param status  HTTP status code
      * @param version HTTP version
      */
     public Reply(int status, int[] version) {
@@ -56,7 +55,18 @@ public class Reply implements Writable {
     }
 
     /**
+     * Changes current body parser by the received one
+     *
+     * @param parser New body parser
+     */
+    public static void setParser(AbstractHttpParser parser) {
+        //TODO temporary
+        Reply.parser = parser;
+    }
+
+    /**
      * Return HTTP status code
+     *
      * @return status code
      */
     public int getStatus() {
@@ -65,6 +75,7 @@ public class Reply implements Writable {
 
     /**
      * Returns Reply identifier
+     *
      * @return Reply id
      */
     public int getReplyId() {
@@ -73,6 +84,7 @@ public class Reply implements Writable {
 
     /**
      * Changes Reply identifier by the received one
+     *
      * @param replyId New Reply id
      */
     public void setReplyId(int replyId) {
@@ -81,6 +93,7 @@ public class Reply implements Writable {
 
     /**
      * Returns a map with current Reply headers
+     *
      * @return Map with headers
      */
     public HashMap<String, String> getHeaders() {
@@ -89,6 +102,7 @@ public class Reply implements Writable {
 
     /**
      * Returns specific header
+     *
      * @param key Header name to search
      * @return Header value if exists
      */
@@ -98,7 +112,8 @@ public class Reply implements Writable {
 
     /**
      * Adds new header
-     * @param key Header's name
+     *
+     * @param key   Header's name
      * @param value Header's value
      */
     public void addHeader(String key, String value) {
@@ -107,6 +122,7 @@ public class Reply implements Writable {
 
     /**
      * Returns current Reply body
+     *
      * @return Reply body
      */
     public HttpBody getBody() {
@@ -115,6 +131,7 @@ public class Reply implements Writable {
 
     /**
      * Changes body by the received one
+     *
      * @param body New body
      */
     public void setBody(HttpBody body) {
@@ -124,6 +141,7 @@ public class Reply implements Writable {
 
     /**
      * Returns HTTP version for current reply
+     *
      * @return HTTP version
      */
     public int[] getVersion() {
@@ -131,24 +149,17 @@ public class Reply implements Writable {
     }
 
     /**
-     * Changes current body parser by the received one
-     * @param parser New body parser
-     */
-    public static void setParser(AbstractHttpParser parser) {
-        //TODO temporary
-        Reply.parser = parser;
-    }
-
-    /**
      * Returns all the Reply in HTTP format with String
+     *
      * @return Reply in String format
      * @throws WriteableException If any error is produced while parsing throws this exception
      */
     public String getMessage() throws WriteableException {
-        try {
-            return parser.parseReply(this);
-        } catch (HttpParsingException e) {
-            throw new WriteableException(e.getMessage());
-        }
+//        try {
+//            //return parser.parseReply(this);
+//        } catch (HttpParsingException e) {
+//            throw new WriteableException(e.getMessage());
+//        }
+        throw new RuntimeException("FIX\n");
     }
 }
