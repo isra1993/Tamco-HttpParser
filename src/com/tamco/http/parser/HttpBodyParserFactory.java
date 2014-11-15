@@ -6,11 +6,11 @@ import java.util.List;
 /**
  * @author isra
  * @version 1.0
- *
- * Factory method to choose automatically a body parser to the body parsers list
- * and allows to add more support methods to can improve application flexibility.
- * Although a new method have been added it is necessary to implement a class
- * that resolves new type of parser.
+ *          <p/>
+ *          Factory method to choose automatically a body parser to the body parsers list
+ *          and allows to add more support methods to can improve application flexibility.
+ *          Although a new method have been added it is necessary to implement a class
+ *          that resolves new type of parser.
  */
 public class HttpBodyParserFactory {
     /**
@@ -20,10 +20,10 @@ public class HttpBodyParserFactory {
 
     /**
      * Returns a body parser to specified content type if is present into the list
+     *
      * @param contentType Header Content Type
-     * @return
-     *          body parser if exists
-     *          null if not exists
+     * @return body parser if exists
+     * null if not exists
      */
     public HttpBodyParser getParserFor(String contentType) {
         for (HttpBodyParser bodyParser : bodyParsers) {
@@ -37,6 +37,7 @@ public class HttpBodyParserFactory {
     /**
      * Adds new body parser to the current list.
      * If the list is null creates new list.
+     *
      * @param bodyParser Type of body parser to be added
      */
     public void addBodyParser(HttpBodyParser bodyParser) {
@@ -48,6 +49,7 @@ public class HttpBodyParserFactory {
 
     /**
      * Changes list of parser by the received one
+     *
      * @param bodyParsers New list of parsers
      */
     public void setBodyParsers(List<HttpBodyParser> bodyParsers) {

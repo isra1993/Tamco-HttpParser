@@ -3,8 +3,8 @@ package com.tamco.http.constants;
 /**
  * @author isra
  * @version 1.0
- *
- * Class that includes accepted headers for our application
+ *          <p/>
+ *          Class that includes accepted headers for our application
  */
 public interface HttpHeaders {
     /**

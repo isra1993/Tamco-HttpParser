@@ -3,9 +3,9 @@ package com.tamco.http.constants;
 /**
  * @author isra
  * @version 1.0
- *
- * List of HTTP methods supported by our application, however some of them are usually non used
- * but we include them to increase compatibility with HTTP requests.
+ *          <p/>
+ *          List of HTTP methods supported by our application, however some of them are usually non used
+ *          but we include them to increase compatibility with HTTP requests.
  */
 public enum HttpMethod {
     /**

@@ -5,9 +5,9 @@ import com.tamco.http.constants.ContentTypes;
 /**
  * @author isra
  * @version 1.0
- *
- * This class represents HTTP request/reply body in text plain form without any
- * type of encoding. It corresponds with HTTP header ContentType called text/plain.
+ *          <p/>
+ *          This class represents HTTP request/reply body in text plain form without any
+ *          type of encoding. It corresponds with HTTP header ContentType called text/plain.
  */
 public class HttpPlainBody implements HttpBody {
     /**
@@ -18,6 +18,7 @@ public class HttpPlainBody implements HttpBody {
     /**
      * Class builder that receives a String with the content that should
      * be saved.
+     *
      * @param content String with request/reply body content
      */
     public HttpPlainBody(String content) {
@@ -25,7 +26,17 @@ public class HttpPlainBody implements HttpBody {
     }
 
     /**
+     * Append content to the body
+     *
+     * @param content ( content to add )
+     */
+    public void append(String content) {
+        this.content += content;
+    }
+
+    /**
      * Returns body content in String form
+     *
      * @return Body content
      */
     @Override
@@ -35,6 +46,7 @@ public class HttpPlainBody implements HttpBody {
 
     /**
      * Returns body type of content. In that case it will be text/plain.
+     *
      * @return Type of content
      */
     @Override

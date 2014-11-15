@@ -5,8 +5,6 @@ import com.tamco.http.constants.HttpMethod;
 import com.tamco.http.constants.HttpStatus;
 import com.tamco.http.messages.Reply;
 import com.tamco.http.messages.Request;
-import com.tamco.ioc.annotation.Configure;
-import com.tamco.ioc.exception.InvalidConfigException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,17 +17,16 @@ import java.util.Set;
 /**
  * @author isra
  * @version 1.0
- *
- * Simple HTTP parser that implements AbstractHttpParser interface.
- * This class realises the parse of specific HTTP requests or responses
- * using a factory method to choose body encoding type automatically.
- *
- * In case of request this class verifies that is well formed and proceeds
- * to parse it creating a Request class with correct attributes.
- *
- * In the other case, the response, a Reply class is verified and
- * converted to a string message to be sent to client.
- *
+ *          <p/>
+ *          Simple HTTP parser that implements AbstractHttpParser interface.
+ *          This class realises the parse of specific HTTP requests or responses
+ *          using a factory method to choose body encoding type automatically.
+ *          <p/>
+ *          In case of request this class verifies that is well formed and proceeds
+ *          to parse it creating a Request class with correct attributes.
+ *          <p/>
+ *          In the other case, the response, a Reply class is verified and
+ *          converted to a string message to be sent to client.
  */
 public class SimpleHttpParser implements AbstractHttpParser {
 
@@ -44,10 +41,11 @@ public class SimpleHttpParser implements AbstractHttpParser {
      * Parses the received string HTTP request and verify if it is well formed.
      * If all is ok returns a Request java class that contains all HTTP request
      * received data
+     *
      * @param request HTTP request in String form
      * @return a Request class with all HTTP request attributes verified
      * @throws HttpParsingException If any error occurs while parsing this
-     *          exception is thrown
+     *                              exception is thrown
      */
     public Request parseRequest(String request) throws HttpParsingException {
         StringBuilder err = new StringBuilder();
@@ -136,14 +134,15 @@ public class SimpleHttpParser implements AbstractHttpParser {
      * Parses a HTTP reply received in class form and converts it to string
      * form to send it to HTTP client. Verify all reply attributes and
      * send response if all is ok.
+     *
      * @param reply Class that represents a reply with their attributes
      * @return A string representation of HTTP response
-     * @throws HttpParsingException If any error occurs while parsing this
-     *          exception is thrown
+     * @throws HttpParsingException         If any error occurs while parsing this
+     *                                      exception is thrown
      * @throws UnsupportedEncodingException If any error occurs while encoding
-     *          this exception is thrown.
+     *                                      this exception is thrown.
      */
-    public String parseReply(Reply reply) throws HttpParsingException, UnsupportedEncodingException {
+    public String parseReply(Reply reply) throws HttpParsingException, HttpBodyException {
         StringBuilder result = new StringBuilder();
         StringBuilder err = new StringBuilder();
         int statusErrorCode = -1;
@@ -187,10 +186,10 @@ public class SimpleHttpParser implements AbstractHttpParser {
 
     /**
      * Returns the HTTP method if it is correct
+     *
      * @param method A string representation of HTTP method
-     * @return
-     *          An enum type of HTTP method if it exists
-     *          Null if it is not correct
+     * @return An enum type of HTTP method if it exists
+     * Null if it is not correct
      */
     private HttpMethod getMethod(String method) {
         HttpMethod httpMethod = null;
@@ -215,10 +214,11 @@ public class SimpleHttpParser implements AbstractHttpParser {
     /**
      * Parses request headers receiving a buffer reader that points to first header
      * if there are them or to null if there are not
+     *
      * @param reader Buffer that points to the first header or to null if there are no headers
      * @return A hash table with all headers present in request
      * @throws HttpParsingException If any error occurs while parsing headers this
-     *          exception is thrown
+     *                              exception is thrown
      */
     private Hashtable<String, String> parseHeaders(BufferedReader reader) throws HttpParsingException {
         try {
@@ -247,6 +247,7 @@ public class SimpleHttpParser implements AbstractHttpParser {
 
     /**
      * Returns headers to string initial form extracting it from a received map
+     *
      * @param map Hash map with all the reply headers
      * @return A string representation of reply headers
      */
@@ -264,6 +265,7 @@ public class SimpleHttpParser implements AbstractHttpParser {
 
     /**
      * Changes factory parser by the received one
+     *
      * @param httpBodyParserFactory New factory parser
      */
     public void setHttpBodyParserFactory(HttpBodyParserFactory httpBodyParserFactory) {

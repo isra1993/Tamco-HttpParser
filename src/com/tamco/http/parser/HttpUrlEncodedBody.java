@@ -10,13 +10,13 @@ import java.util.Set;
 /**
  * @author isra
  * @version 1.0
- *
- * This class represents body encoded with urlencoded HTTP ContentType.
- *
- * Uses ISO-8859-1 to decode body with ContentType=application/x-www-form-urlencoded
- * that has this format: MyParam1=Value1&MyParam2=Value2 and replaces non characters
- * with '%' symbol plus an ASCII representation of specific symbol like white
- * space(' ') for example.
+ *          <p/>
+ *          This class represents body encoded with urlencoded HTTP ContentType.
+ *          <p/>
+ *          Uses ISO-8859-1 to decode body with ContentType=application/x-www-form-urlencoded
+ *          that has this format: MyParam1=Value1&MyParam2=Value2 and replaces non characters
+ *          with '%' symbol plus an ASCII representation of specific symbol like white
+ *          space(' ') for example.
  */
 public class HttpUrlEncodedBody implements HttpBody {
     /**
@@ -27,6 +27,7 @@ public class HttpUrlEncodedBody implements HttpBody {
 
     /**
      * Class builder that receives a table containing body params
+     *
      * @param params Table of params
      */
     public HttpUrlEncodedBody(Hashtable<String, String> params) {
@@ -36,6 +37,7 @@ public class HttpUrlEncodedBody implements HttpBody {
     /**
      * Returns Content Type in String form.
      * In this case returns application/x-www-form-urlencoded.
+     *
      * @return Body content type
      */
     @Override
@@ -46,11 +48,12 @@ public class HttpUrlEncodedBody implements HttpBody {
     /**
      * Returns body content in String form. Body original form is recovered
      * using ISO-8859-1 encoding.
+     *
      * @return Body content
      * @throws UnsupportedEncodingException If an error occurs when content
-     *          is parsed to ISO-8859-1 this exception is thrown.
+     *                                      is parsed to ISO-8859-1 this exception is thrown.
      */
-    public String getContent() throws UnsupportedEncodingException {
+    public String getContent() throws HttpBodyException {
         Set<String> keys = params.keySet();
         StringBuilder builder = new StringBuilder();
 
@@ -58,15 +61,19 @@ public class HttpUrlEncodedBody implements HttpBody {
             builder.append(key + "=" + params.get(key) + "&");
         }
         String content = builder.toString();
-        if(content.length() > 1) {
-            content = content.substring(0,content.length()-1);
+        if (content.length() > 1) {
+            content = content.substring(0, content.length() - 1);
         }
-
-        return URLEncoder.encode(content, "ISO-8859-1");
+        try {
+            return URLEncoder.encode(content, "ISO-8859-1");
+        }catch (UnsupportedEncodingException  e) {
+            throw new HttpBodyException("Exception encoding",e);
+        }
     }
 
     /**
      * Returns specific param if key exists extracting it from table.
+     *
      * @param key Name of param to search in table
      * @return Param whose key corresponds with received one
      */

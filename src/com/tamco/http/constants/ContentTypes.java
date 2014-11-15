@@ -3,9 +3,9 @@ package com.tamco.http.constants;
 /**
  * @author isra
  * @version 1.0
- *
- * This class contains all HTTP Content Types supported by application,
- * each of them should have specific parse class implemented.
+ *          <p/>
+ *          This class contains all HTTP Content Types supported by application,
+ *          each of them should have specific parse class implemented.
  */
 public interface ContentTypes {
     /**

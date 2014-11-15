@@ -155,11 +155,10 @@ public class Reply implements Writable {
      * @throws WriteableException If any error is produced while parsing throws this exception
      */
     public String getMessage() throws WriteableException {
-//        try {
-//            //return parser.parseReply(this);
-//        } catch (HttpParsingException e) {
-//            throw new WriteableException(e.getMessage());
-//        }
-        throw new RuntimeException("FIX\n");
+        try {
+            return parser.parseReply(this);
+        } catch (Exception e) {
+            throw new WriteableException(e.getMessage());
+        }
     }
 }

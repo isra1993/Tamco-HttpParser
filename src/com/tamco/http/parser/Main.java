@@ -2,11 +2,9 @@ package com.tamco.http.parser;
 
 import com.tamco.http.constants.ContentTypes;
 import com.tamco.http.messages.Reply;
-import com.tamco.http.messages.Request;
 import com.tamco.http.messages.WriteableException;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**

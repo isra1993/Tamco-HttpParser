@@ -9,10 +9,10 @@ import java.util.Hashtable;
 /**
  * @author isra
  * @version 1.0
- *
- * Request that be sent to the server and contains all Request data after parse it.
- * It is very similar to HTTP Request because we want to make easy the change between HTTP and this
- * library.
+ *          <p/>
+ *          Request that be sent to the server and contains all Request data after parse it.
+ *          It is very similar to HTTP Request because we want to make easy the change between HTTP and this
+ *          library.
  */
 public class Request {
     /**
@@ -42,11 +42,12 @@ public class Request {
 
     /**
      * Request builder that receives
-     * @param headers Table of HTTP headers
+     *
+     * @param headers    Table of HTTP headers
      * @param httpMethod HTTP method
-     * @param httpBody Content message
-     * @param url Resource URL
-     * @param version HTTP version
+     * @param httpBody   Content message
+     * @param url        Resource URL
+     * @param version    HTTP version
      */
     public Request(Hashtable<String, String> headers, HttpMethod httpMethod, HttpBody httpBody, String url, int[] version) {
         this.headers = headers;
@@ -58,6 +59,7 @@ public class Request {
 
     /**
      * Returns HTTP header that correspond with received name
+     *
      * @param name Header name
      * @return Resource with correspondent name if exists
      */
@@ -67,6 +69,7 @@ public class Request {
 
     /**
      * Return all available headers for that request
+     *
      * @return Available headers
      */
     public Enumeration<String> getAvailableHeaders() {
@@ -75,6 +78,7 @@ public class Request {
 
     /**
      * Return HTTP version from that request
+     *
      * @return HTTP version
      */
     public String getVersion() {
@@ -83,6 +87,7 @@ public class Request {
 
     /**
      * Return HTTPBody class
+     *
      * @return Body class
      */
     public HttpBody getBody() {
@@ -91,6 +96,7 @@ public class Request {
 
     /**
      * Return the URL from current request resource
+     *
      * @return Resource URL
      */
     public String getUrl() {
@@ -99,6 +105,7 @@ public class Request {
 
     /**
      * Return request identifier
+     *
      * @return Request id
      */
     public int getRequestId() {
@@ -107,6 +114,7 @@ public class Request {
 
     /**
      * Changes request identifier by the received one
+     *
      * @param requestId New request id to be modified
      */
     public void setRequestId(int requestId) {
@@ -115,6 +123,7 @@ public class Request {
 
     /**
      * Return HTTP method from Enum list
+     *
      * @return HTTP method
      */
     public HttpMethod getHttpMethod() {
