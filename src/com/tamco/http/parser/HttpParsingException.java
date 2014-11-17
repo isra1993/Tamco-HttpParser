@@ -24,6 +24,10 @@ public class HttpParsingException extends Exception {
         super(msg);
     }
 
+
+    public HttpParsingException(int statusErrCode, Throwable cause) {
+        super(cause);
+    }
     /**
      * Returns HTTP status error code
      *

@@ -2,7 +2,6 @@ package com.tamco.http.parser;
 
 import com.tamco.http.constants.ContentTypes;
 import com.tamco.http.messages.Reply;
-import com.tamco.http.messages.WriteableException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class Main {
 
     private static SimpleHttpParser parser;
 
-    public static void main(String[] args) throws Exception, WriteableException {
+    public static void main(String[] args) throws Exception{
         List<HttpBodyParser> parsers = new ArrayList<HttpBodyParser>();
         parsers.add(new HttpUrlEncodedBodyParser());
         HttpBodyParserFactory factory = new HttpBodyParserFactory();

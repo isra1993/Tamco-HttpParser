@@ -2,8 +2,11 @@ package com.tamco.http.messages;
 
 
 import com.tamco.http.constants.HttpHeaders;
+import com.tamco.http.constants.HttpStatus;
 import com.tamco.http.parser.AbstractHttpParser;
 import com.tamco.http.parser.HttpBody;
+import com.tamco.http.parser.HttpBodyException;
+import com.tamco.http.parser.HttpParsingException;
 
 import java.util.HashMap;
 
@@ -16,7 +19,7 @@ import java.util.HashMap;
  *          we want to make easy the change between HTTP and this
  *          library.
  */
-public class Reply implements Writable {
+public class Reply {
     /**
      * Parser used to parse body reply
      */
@@ -152,13 +155,13 @@ public class Reply implements Writable {
      * Returns all the Reply in HTTP format with String
      *
      * @return Reply in String format
-     * @throws WriteableException If any error is produced while parsing throws this exception
+     * @throws HttpParsingException If any error is produced while parsing throws this exception
      */
-    public String getMessage() throws WriteableException {
+    public String getMessage() throws HttpParsingException {
         try {
             return parser.parseReply(this);
-        } catch (Exception e) {
-            throw new WriteableException(e.getMessage());
+        }catch (HttpBodyException e){
+            throw new HttpParsingException(HttpStatus.SC_BAD_REQUEST, e);
         }
     }
 }
